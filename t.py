@@ -9,13 +9,13 @@ import json, sys, requests, time, getopt
 def main(argv):
     url = file = False
 
-    headers = {"Authorization" :  "Basic ZGFtaWVuLmhpxNw==",
+    headers = {"Authorization" :  "Basic ZGFtaWVuLmhfMjAxNw==",
     "Cache-Control": "no-cache",
     "Content-Type": "application/json",
     "X-CSRF-Token": "GTAudTQjJTvnFkr-LiWOxtu3uN5BGMVWMu9nKw9D0ig"}
 
     usage = "Hello man :)\nUsage: python t.py -f <JSON FILE> -u <REST URL> -s <NUMBER=200>"
-    size = '200'
+    size = 200
 
     try:
         opts, args = getopt.getopt(argv,"hu:s:f:",["url=","size=", "file="])
