@@ -16,11 +16,16 @@ def main(argv):
     "X-CSRF-Token": "GTAudTQjJTvnFkr-LiWOxtu3uN5BGMVWMu9nKw9D0ig"}
 
     usage = "\033[93mHello man :)\nUsage: python t.py -f <JSON FILE> -u <REST URL> -s <NUMBER=200> --sleep <NUMBER=10>\033[0m"
+    usage = """\033[93m
+Hello world
+Usage: python t.py -f <JSON FILE> -u <REST URL> -s <NUMBER=200> --sleep <NUMBER=10> --start=<START_FROM=0>
+    \033[0m"""
     size = 200
     sleep = 10
+    start = 0
 
     try:
-        opts, args = getopt.getopt(argv,"hu:s:f:",["url=","size=", "file=", "sleep="])
+        opts, args = getopt.getopt(argv,"hu:s:f:",["url=","size=", "file=", "sleep=", "start="])
 
     except getopt.GetoptError:
         print usage
@@ -37,6 +42,8 @@ def main(argv):
             file = arg
         elif opt in ("--sleep"):
             sleep = arg
+        elif opt in ("--start"):
+            start = arg
 
     if url == False or file == False:
         print usage
@@ -51,8 +58,11 @@ def main(argv):
         print "\033[93m=======================================================================================================\033[0m"
 
         for i in xrange(0, len(o), int(size)):
+            current = i / int(size)
+            if int(start) > int(current):
+                continue
             r = requests.post(url, headers=headers, data=json.dumps(o[i:i+int(size)]))
-            print "\033[92m(iteration : "+str(i / int(size))+")\033[0m => "+r.text
+            print "\033[92m(iteration : "+str(current)+")\033[0m => "+r.text
             time.sleep(int(sleep))
 
 if __name__ == "__main__":
